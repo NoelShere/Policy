@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Privacy Policy — Code Theory: Pocket Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:        #0a0a0f;
+    --bg-card:   #0d0d15;
+    --bg-code:   #070710;
+    --border:    #1a1a2e;
+    --border-2:  #2a2a3e;
+    --green:     #00ff9d;
+    --cyan:      #00cfff;
+    --amber:     #ff9d00;
+    --pink:      #ff4d6d;
+    --purple:    #cf00ff;
+    --text:      #c9d1d9;
+    --text-dim:  #666677;
+    --text-mute: #333344;
+    --white:     #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    min-height: 100vh;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Grid background */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,157,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,157,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .header-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green), 0 0 24px rgba(0,255,157,0.3);
+    animation: pulse 2.2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; box-shadow: 0 0 10px var(--green), 0 0 24px rgba(0,255,157,0.3); }
+    50%      { opacity: 0.5; box-shadow: 0 0 4px var(--green); }
+  }
+
+  .header-title { flex: 1; }
+  .header-title .app-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--white);
+    letter-spacing: 0.06em;
+  }
+  .header-title .app-sub {
+    font-size: 8px;
+    color: var(--green);
+    letter-spacing: 0.35em;
+    margin-top: -2px;
+  }
+
+  .header-badge {
+    font-size: 9px;
+    color: var(--text-mute);
+    letter-spacing: 0.15em;
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--green);
+    border: 1px solid rgba(0,255,157,0.3);
+    background: rgba(0,255,157,0.05);
+    padding: 4px 14px;
+    border-radius: 3px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: clamp(32px, 5vw, 52px);
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .hero h1 span {
+    color: var(--green);
+  }
+
+  .hero-meta {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .meta-item {
+    font-size: 11px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .meta-item::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-mute);
+  }
+
+  .hero-line {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--green) 0%, rgba(0,255,157,0.2) 40%, transparent 80%);
+    margin-top: 40px;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    position: sticky;
+    top: 74px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .toc-label {
+    font-size: 9px;
+    color: var(--text-mute);
+    letter-spacing: 0.25em;
+    margin-bottom: 14px;
+  }
+
+  .toc a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 0;
+    text-decoration: none;
+    font-size: 11px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    transition: color 0.15s;
+  }
+  .toc a:last-child { border-bottom: none; }
+  .toc a:hover { color: var(--green); }
+  .toc a::before {
+    content: '';
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--text-mute);
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .toc a:hover::before { background: var(--green); }
+
+  /* ── CONTENT ── */
+  .content {
+    animation: fadeUp 0.6s ease 0.45s both;
+  }
+
+  .section {
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .section-num {
+    font-size: 9px;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+  }
+
+  .section p {
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    line-height: 1.9;
+    font-size: 13px;
+  }
+  .section p:last-child { margin-bottom: 0; }
+
+  /* Highlighted callout box */
+  .callout {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--green);
+    border-radius: 6px;
+    padding: 18px 20px;
+    margin: 20px 0;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+
+  .callout.amber  { border-left-color: var(--amber); }
+  .callout.cyan   { border-left-color: var(--cyan); }
+  .callout.pink   { border-left-color: var(--pink); }
+
+  /* Data table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 12px;
+  }
+  .data-table th {
+    background: var(--bg-code);
+    color: var(--text-mute);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .data-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .td-label {
+    color: var(--text);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* Inline code */
+  code {
+    background: var(--bg-code);
+    color: var(--cyan);
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+  }
+
+  /* List */
+  .policy-list {
+    list-style: none;
+    margin: 14px 0;
+  }
+  .policy-list li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-bottom: 1px solid rgba(26,26,46,0.5);
+  }
+  .policy-list li:last-child { border-bottom: none; }
+  .policy-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 10px;
+    top: 7px;
+  }
+
+  /* Tag chips */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    background: var(--bg-code);
+    letter-spacing: 0.05em;
+  }
+  .tag.green  { border-color: rgba(0,255,157,0.3);  color: var(--green); background: rgba(0,255,157,0.05); }
+  .tag.amber  { border-color: rgba(255,157,0,0.3);  color: var(--amber); background: rgba(255,157,0,0.05); }
+  .tag.cyan   { border-color: rgba(0,207,255,0.3);  color: var(--cyan);  background: rgba(0,207,255,0.05); }
+
+  /* Contact card */
+  .contact-card {
+    background: var(--bg-code);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-top: 20px;
+  }
+  .contact-card .label {
+    font-size: 9px;
+    color: var(--text-mute);
+    letter-spacing: 0.25em;
+    margin-bottom: 10px;
+  }
+  .contact-card a {
+    color: var(--green);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: opacity 0.15s;
+  }
+  .contact-card a:hover { opacity: 0.75; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .footer-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    opacity: 0.5;
+  }
+  .footer-text {
+    font-size: 10px;
+    color: var(--text-mute);
+  }
+  .footer-right {
+    font-size: 10px;
+    color: var(--text-mute);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    header { padding: 14px 20px; }
+    .hero  { padding: 50px 20px 40px; }
+    .container {
+      grid-template-columns: 1fr;
+      padding: 0 20px 60px;
+      gap: 32px;
+    }
+    .toc { position: static; }
+    footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-dot"></div>
+  <div class="header-title">
+    <div class="app-name">CODE THEORY</div>
+    <div class="app-sub">POCKET EDITION</div>
+  </div>
+  <div class="header-badge">PRIVACY POLICY</div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-tag">LEGAL DOCUMENT</div>
+  <h1>Privacy <span>Policy</span></h1>
+  <div class="hero-meta">
+    <div class="meta-item">Effective: January 1, 2025</div>
+    <div class="meta-item">Last Updated: March 10, 2026</div>
+    <div class="meta-item">Version 1.0</div>
+    <div class="meta-item">Android Application</div>
+  </div>
+  <div class="hero-line"></div>
+</div>
+
+<!-- Main content -->
+<div class="container">
+
+  <!-- TOC -->
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-label">CONTENTS</div>
+    <a href="#overview">Overview</a>
+    <a href="#data-collected">Data We Collect</a>
+    <a href="#data-not-collected">Data We Don't Collect</a>
+    <a href="#permissions">App Permissions</a>
+    <a href="#third-party">Third-Party Services</a>
+    <a href="#data-storage">Data Storage</a>
+    <a href="#children">Children's Privacy</a>
+    <a href="#your-rights">Your Rights</a>
+    <a href="#changes">Policy Changes</a>
+    <a href="#contact">Contact Us</a>
+  </nav>
+
+  <!-- Sections -->
+  <main class="content">
+
+    <!-- 01 Overview -->
+    <section class="section" id="overview">
+      <div class="section-num">01 — OVERVIEW</div>
+      <h2>Overview</h2>
+      <p>
+        Code Theory: Pocket Edition ("the App") is an offline programming reference dictionary
+        for Android. This Privacy Policy describes how the App handles — or more accurately, does
+        not handle — your personal information.
+      </p>
+      <div class="callout">
+        <strong style="color:#00ff9d;">TL;DR:</strong> Code Theory does not collect, transmit, store,
+        or share any personal data. The App works entirely offline on your device. No accounts,
+        no tracking, no ads.
+      </div>
+      <p>
+        By installing or using Code Theory: Pocket Edition, you acknowledge and agree to this
+        Privacy Policy. If you do not agree, please uninstall the App from your device.
+      </p>
+
+      <div class="tags">
+        <span class="tag green">100% Offline</span>
+        <span class="tag green">No Account Required</span>
+        <span class="tag green">No Data Collection</span>
+        <span class="tag green">No Ads</span>
+        <span class="tag green">No Tracking</span>
+      </div>
+    </section>
+
+    <!-- 02 Data Collected -->
+    <section class="section" id="data-collected">
+      <div class="section-num">02 — DATA WE COLLECT</div>
+      <h2>Data We Collect</h2>
+      <p>
+        Code Theory: Pocket Edition collects no personal information whatsoever. The App operates
+        completely on-device. All code examples, concept definitions, and language reference data
+        are bundled within the App itself — nothing is fetched from a remote server.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>DATA TYPE</th>
+            <th>COLLECTED?</th>
+            <th>NOTES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label">Personal Identifiers</td>
+            <td><span class="tag">No</span></td>
+            <td>Name, email, phone — never requested or stored</td>
+          </tr>
+          <tr>
+            <td class="td-label">Location Data</td>
+            <td><span class="tag">No</span></td>
+            <td>No location permission is requested</td>
+          </tr>
+          <tr>
+            <td class="td-label">Usage Analytics</td>
+            <td><span class="tag">No</span></td>
+            <td>No analytics SDK is included</td>
+          </tr>
+          <tr>
+            <td class="td-label">Device Identifiers</td>
+            <td><span class="tag">No</span></td>
+            <td>IMEI, advertising ID — never accessed</td>
+          </tr>
+          <tr>
+            <td class="td-label">Search Queries</td>
+            <td><span class="tag">No</span></td>
+            <td>Searches run locally, never logged</td>
+          </tr>
+          <tr>
+            <td class="td-label">Clipboard Contents</td>
+            <td><span class="tag">No</span></td>
+            <td>Copy feature only writes to clipboard; never reads it</td>
+          </tr>
+          <tr>
+            <td class="td-label">Network Traffic</td>
+            <td><span class="tag">No</span></td>
+            <td>App has no internet permission</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 03 Data Not Collected -->
+    <section class="section" id="data-not-collected">
+      <div class="section-num">03 — DATA WE DON'T COLLECT</div>
+      <h2>Data We Don't Collect</h2>
+      <p>
+        To be absolutely transparent, here is an explicit list of data the App has no capability
+        to collect, regardless of how it is used:
+      </p>
+      <ul class="policy-list">
+        <li>Your name, email address, or any contact information</li>
+        <li>Your device's IMEI, serial number, or hardware identifiers</li>
+        <li>Your IP address or network information</li>
+        <li>Your physical or precise GPS location</li>
+        <li>Your browsing history or behavior outside the App</li>
+        <li>Photos, files, or media from your device</li>
+        <li>Microphone or camera input</li>
+        <li>Contacts, calendar, or call logs</li>
+        <li>Payment or financial information</li>
+        <li>Biometric or health data</li>
+        <li>Advertising identifiers (Google Advertising ID or similar)</li>
+      </ul>
+      <div class="callout cyan">
+        The App does not contain any advertising SDKs, crash reporting services, or analytics
+        libraries. There is no backend server associated with Code Theory: Pocket Edition.
+      </div>
+    </section>
+
+    <!-- 04 Permissions -->
+    <section class="section" id="permissions">
+      <div class="section-num">04 — APP PERMISSIONS</div>
+      <h2>App Permissions</h2>
+      <p>
+        Code Theory: Pocket Edition requests only the absolute minimum Android permissions
+        necessary for its core functionality.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>PERMISSION</th>
+            <th>WHY IT'S NEEDED</th>
+            <th>SENSITIVE?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label"><code>WRITE_CLIPBOARD</code></td>
+            <td>Allows the "Copy" button to place code snippets on your clipboard</td>
+            <td><span class="tag amber">Low Risk</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        The App does <strong style="color:#fff;">not</strong> request <code>INTERNET</code>,
+        <code>ACCESS_FINE_LOCATION</code>, <code>READ_CONTACTS</code>,
+        <code>READ_EXTERNAL_STORAGE</code>, <code>CAMERA</code>, <code>RECORD_AUDIO</code>,
+        or any other sensitive Android permission.
+      </p>
+      <div class="callout amber">
+        If you are ever prompted for a permission not listed above by an app claiming to be
+        Code Theory, do not grant it and consider that copy of the App may be modified or counterfeit.
+      </div>
+    </section>
+
+    <!-- 05 Third-Party Services -->
+    <section class="section" id="third-party">
+      <div class="section-num">05 — THIRD-PARTY SERVICES</div>
+      <h2>Third-Party Services</h2>
+      <p>
+        Code Theory: Pocket Edition does not integrate with, embed, or communicate with any
+        third-party services. Specifically, the App does not use:
+      </p>
+      <ul class="policy-list">
+        <li>Google Analytics, Firebase Analytics, or any analytics platform</li>
+        <li>Google AdMob, Meta Audience Network, or any advertising network</li>
+        <li>Crashlytics, Sentry, or any crash reporting service</li>
+        <li>Facebook SDK, Twitter SDK, or any social media SDK</li>
+        <li>In-app purchase libraries or payment processors</li>
+        <li>Remote configuration or feature-flag services</li>
+        <li>Content delivery networks (CDNs) or external APIs</li>
+      </ul>
+      <p>
+        The App is distributed through the Google Play Store. Google may collect certain
+        installation and device metadata as part of the Play Store platform. This collection
+        is governed by Google's own Privacy Policy and is outside our control.
+      </p>
+    </section>
+
+    <!-- 06 Data Storage -->
+    <section class="section" id="data-storage">
+      <div class="section-num">06 — DATA STORAGE</div>
+      <h2>Data Storage & Security</h2>
+      <p>
+        All application data — including the complete programming concept database, code snippets,
+        and language reference content — is stored entirely within the App's installation package
+        (<code>.apk</code>) on your device.
+      </p>
+      <div class="callout">
+        No data is ever transmitted off your device. There are no servers, no databases, and no
+        cloud infrastructure associated with this App.
+      </div>
+      <p>
+        The App does not create or write any files to your device's shared storage. Any
+        operational data (such as your last selected language filter or scroll position) resides
+        solely in Android's standard app-private storage and is automatically removed when you
+        uninstall the App.
+      </p>
+      <p>
+        Because no personal data is collected or transmitted, there is no risk of a data breach
+        affecting your personal information through Code Theory: Pocket Edition.
+      </p>
+    </section>
+
+    <!-- 07 Children -->
+    <section class="section" id="children">
+      <div class="section-num">07 — CHILDREN'S PRIVACY</div>
+      <h2>Children's Privacy</h2>
+      <p>
+        Code Theory: Pocket Edition is a general-purpose educational reference tool intended for
+        users of all ages, including those under 13. The App is fully compliant with the
+        Children's Online Privacy Protection Act (COPPA) and similar legislation worldwide.
+      </p>
+      <p>
+        Since the App collects no personal information from any user, it poses no risk to children's
+        privacy. No age verification, parental consent, or account creation is required.
+      </p>
+      <div class="callout cyan">
+        Parents and guardians can be confident that Code Theory: Pocket Edition does not collect,
+        share, or monetize any information from their children.
+      </div>
+    </section>
+
+    <!-- 08 Your Rights -->
+    <section class="section" id="your-rights">
+      <div class="section-num">08 — YOUR RIGHTS</div>
+      <h2>Your Rights</h2>
+      <p>
+        Because Code Theory: Pocket Edition does not collect any personal data, there is nothing
+        to access, correct, export, or delete on our end. However, your rights as a user remain
+        important to us:
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>RIGHT</th>
+            <th>STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-label">Right to Access</td>
+            <td>No data held — nothing to provide</td>
+          </tr>
+          <tr>
+            <td class="td-label">Right to Rectification</td>
+            <td>No personal data stored — nothing to correct</td>
+          </tr>
+          <tr>
+            <td class="td-label">Right to Erasure</td>
+            <td>Uninstalling the App removes all App data from your device</td>
+          </tr>
+          <tr>
+            <td class="td-label">Right to Portability</td>
+            <td>No personal data collected — nothing to export</td>
+          </tr>
+          <tr>
+            <td class="td-label">Right to Object</td>
+            <td>No profiling or automated decision-making occurs</td>
+          </tr>
+          <tr>
+            <td class="td-label">Opt-Out of Sale</td>
+            <td>We never sell data — there is no data to sell</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Residents of the European Economic Area (EEA), California, Canada, and other jurisdictions
+        with comprehensive privacy legislation retain all statutory rights. To exercise any right,
+        please contact us using the details in Section 10.
+      </p>
+    </section>
+
+    <!-- 09 Changes -->
+    <section class="section" id="changes">
+      <div class="section-num">09 — POLICY CHANGES</div>
+      <h2>Policy Changes</h2>
+      <p>
+        We reserve the right to update this Privacy Policy at any time. Any changes will be
+        reflected by an updated "Last Updated" date at the top of this document and, where
+        material, communicated through the App's Google Play Store listing.
+      </p>
+      <p>
+        Continued use of the App after any changes to this Privacy Policy constitutes your
+        acceptance of the revised terms. We encourage you to review this Policy periodically.
+      </p>
+      <div class="callout pink">
+        If we ever introduce features that require data collection (such as cloud sync or user
+        accounts), we will update this Policy before releasing such features and prominently
+        notify existing users.
+      </div>
+    </section>
+
+    <!-- 10 Contact -->
+    <section class="section" id="contact">
+      <div class="section-num">10 — CONTACT</div>
+      <h2>Contact Us</h2>
+      <p>
+        If you have any questions, concerns, or requests regarding this Privacy Policy or the
+        App's data practices, please reach out. We aim to respond to all inquiries within
+        5 business days.
+      </p>
+      <div class="contact-card">
+        <div class="label">APP DEVELOPER</div>
+        <div style="font-size:16px; font-weight:700; color:#fff; margin-bottom:6px;">Code Theory</div>
+        <div style="font-size:12px; color:#666677; margin-bottom:14px;">Pocket Edition — Android</div>
+        <div class="label">EMAIL</div>
+        <a href="mailto:privacy@codetheory.app">privacy@codetheory.app</a>
+      </div>
+      <p style="margin-top:20px;">
+        This Privacy Policy was written in plain language intentionally. If any section is
+        unclear, please contact us and we will clarify.
+      </p>
+    </section>
+
+  </main>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-dot"></div>
+    <div class="footer-text">© 2026 Code Theory: Pocket Edition. All rights reserved.</div>
+  </div>
+  <div class="footer-right">PRIVACY POLICY v1.0</div>
+</footer>
+
+</body>
+</html>
